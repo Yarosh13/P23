@@ -1,6 +1,7 @@
 //
 // Created by Yaroslav Mulyk - 2021133850
 //
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,12 +9,12 @@
 #include "header.h"
 #include <time.h>
 
-int menu_paragem(Paragem* vetorParagens, int size){
+int MenuParagem(Paragem* vetorParagens, int size){
     int escolha=999;
 
     while(1){
-        srand(time(0));  // Seed the random number generator with current time
-        menu1();
+        srand(time(0));
+        MenuParagens();
         printf("\n-=}");
         scanf(" %d",&escolha);
 
@@ -37,7 +38,7 @@ int menu_paragem(Paragem* vetorParagens, int size){
                 break;
 
             case 9:
-                autor();
+                Autor();
                 break;
 
             default:
@@ -48,13 +49,13 @@ int menu_paragem(Paragem* vetorParagens, int size){
     }
 }
 
-int menu1(){
+int MenuParagens(){
     sleep(0.5);
     printf("\n\n\t\tMENU DAS PARAGENS\n");
     printf("1- ADICIONAR\n2- ELIMINAR\n3- Mostrar Paragens\n0- Voltar\n");
 }
 
-int inicializarParagem(Paragem* vetor, int size){
+int InicializarParagem(Paragem* vetor, int size){
     //printf("%d",size);
     for (int i = 0; i < size; i++) {
         strcpy(vetor[i].nome, "NULL");
@@ -112,24 +113,6 @@ int EliminaParagem(Paragem* vetor, int size){
     printf("\nParagem a eliminar\n Introduza o ID: ");
     scanf("%s",ideliminar);
 
-//    for (int i = 0; i < size; i++) {
-//        if(strcmp(vetor[i].id,"NULL")!= 0){
-//            if(strcmp(vetor[i].id,ideliminar)==0 && vetor[i].associada==0){
-//                //função elimina
-//                printf("\nVou eliminar a paragem com o ID %s ",vetor[i].id);
-//                strcpy(vetor[i].nome, "NULL");
-//                strcpy(vetor[i].id, "NULL");
-//                vetor[i].associada=0;
-//
-//            }else if(strcmp(vetor[i].id,ideliminar)==0 && vetor[i].associada!=0){
-//                printf("\nImpossivel realizar esta operacao|\n\t[NOTA]: Esta paragem esta associada a uma linha");
-//            }
-//        }else if(strcmp(vetor[i].id,ideliminar)!=0 && strcmp(vetor[i].id,"NULL")!= 0){
-//            printf("\nID nao existe!");
-//        }
-//    }
-
-
     int cont=0;
     int sair=0;
     int eliminado=0;
@@ -137,8 +120,6 @@ int EliminaParagem(Paragem* vetor, int size){
     do{
         if(strcmp(vetor[cont].id,ideliminar)==0 && vetor[cont].associada==0){
             //função elimina
-
-
             do {
                 printf("\nELIMINACAO DE UMA PARAGEM\n ID %s\n Nome;%s\n\nTem a certeza?(y/n)\n-=}",vetor[cont].id,vetor[cont].nome);
                 scanf("%s",&sn);
