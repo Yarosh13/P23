@@ -1,12 +1,14 @@
 //
 // Created by Yaroslav Mulyk - 2021133850
 //
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "header.h"
-void intro(){
+
+void Intro(){
     printf( "   __  __  __                                        __   __      __   __      \n");
     printf( "| (_  |_  /                                           _)   _)  /   _)   _)     \n");
     printf( "| __) |__ \\__                                        /__  /__ /   /__  __)     \n");
@@ -28,7 +30,8 @@ void intro(){
 
     printf( "-------------------------------------------------------------------------------\n");
 }
-void autor(){
+
+void Autor(){
     printf( "                                                                               \n");
     printf( "                \\_/  _   _  _   _ |  _       |\\/|     |    |                   \n");
     printf( "       Autor:    |  (_| |  (_) _) | (_| \\/   |  | |_| | \\/ |(                  \n");
@@ -36,7 +39,7 @@ void autor(){
 
 }
 
-int menu(){
+int MenuPrincipal(){
     sleep(0.5);
     printf("\n\t\tMENU\n");
     printf("1- Operacoes com Paragens\n2- Operacoes com Linhas\n3- Calculo de uma viagem\n9-Autor\n0- Sair\n");
