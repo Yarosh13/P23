@@ -5,32 +5,31 @@
 #ifndef UNTITLED3_HEADER_H
 #define UNTITLED3_HEADER_H
 
+typedef struct paragem Paragem;
+struct paragem{
+    char id[5]; // único
+    char nome[64];
+    int associada;
+};
 
-    typedef struct paragem Paragem;
-    struct paragem{
-        char id[5]; // único
-        char nome[64];
-        int associada;
-    };
-
-    typedef struct linha Linha, *pLinha;
-    struct linha{
-        char nome[64];
-        Paragem **parag;
-        int numParagens;
-        pLinha prox;
-    };
+typedef struct linha Linha, *pLinha;
+struct linha{
+    char nome[64];
+    Paragem **parag;
+    int numParagens;
+    pLinha prox;
+};
 
 // Funções do ficheiro "funcoes.c"
-void intro();
-void autor();
-int menu();
+void Intro();
+void Autor();
+int MenuPrincipal();
 
 // Funções do ficheiro "paragens.c"
-int menu_paragem(Paragem* vetorParagens, int size);
-int menu1();
+int MenuParagem(Paragem* vetorParagens, int size);
+int MenuParagens();
 
-int inicializarParagem(Paragem* vetor, int size);
+int InicializarParagem(Paragem* vetor, int size);
 int AdicionarParagem(Paragem* vetor, int size);
 
 int GeraID(Paragem* vetor,int pos, int size);
@@ -39,16 +38,19 @@ int EliminaParagem(Paragem* vetor, int size);
 
 
 // Funções do ficheiro "linhas.c"
-pLinha menu_linhas(pLinha linhaComboio, Paragem* vetorParagens);
-int menu2( );
+pLinha MenuLinha(pLinha linhaComboio, Paragem* vetorParagens);
+int MenuLinhas();
 
-int lista_vazia(pLinha p);
-void preenche_linha(pLinha l);
-pLinha insere_final(pLinha l);
-pLinha insere_inicio(pLinha l);
-void mostra_linhas(pLinha l);
+int ListaVazia(pLinha p);
+void PreencheLinha(pLinha l);
+pLinha InsereFinal(pLinha l);
+pLinha InsereInicio(pLinha l);
+void MostraLinhas(pLinha l);
 
-pLinha associaParagem(pLinha l,Paragem* vetorParagens);
+pLinha AssociaParagem(pLinha l,Paragem* vetorParagens);
+pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens);
+pLinha MudarSequenciaParagens(pLinha l);
+
 void MostraLinhasParagens(pLinha l);
 
 
