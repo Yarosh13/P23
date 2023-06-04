@@ -34,9 +34,8 @@ pLinha MenuLinha(pLinha linhaComboio,Paragem* vetorParagens){
 
             case 2:
                 printf("Case 2\n");
-                linhaComboio = MudarSequenciaParagens(linhaComboio);
-                break;
 
+                break;
             case 3:
                 if(ListaVazia(linhaComboio) ==1){
                     printf("Lista vazia!");
@@ -45,15 +44,27 @@ pLinha MenuLinha(pLinha linhaComboio,Paragem* vetorParagens){
                 }
                     //mostra_linhas(linhaComboio);
                     //MostrarParagens(vetorParagens,50);
-
-
-
                 break;
             case 4:
-                linhaComboio = AssociaParagem(linhaComboio,vetorParagens);
+                if(ListaVazia(linhaComboio) ==1){
+                    printf("Lista vazia!");
+                }else{
+                    linhaComboio = AssociaParagem(linhaComboio,vetorParagens);
+                }
                 break;
             case 5:
-                linhaComboio = DesAssociarParagem(linhaComboio,vetorParagens);
+                if(ListaVazia(linhaComboio) ==1){
+                    printf("Lista vazia!");
+                }else{
+                    linhaComboio = DesAssociarParagem(linhaComboio,vetorParagens);
+                }
+                break;
+            case 6:
+                if(ListaVazia(linhaComboio) ==1){
+                    printf("Lista vazia!");
+                }else{
+                    linhaComboio = MudarSequenciaParagens(linhaComboio,vetorParagens);
+                }
                 break;
             case 9:
                 Autor();
@@ -71,7 +82,7 @@ pLinha MenuLinha(pLinha linhaComboio,Paragem* vetorParagens){
 int MenuLinhas(){
     sleep(0.5);
     printf("\n\t\tMENU DAS LINHAS\n");
-    printf("1- ADICIONAR\n2- ELIMINAR\n3- Mostrar\n4- Associar Paragem\n5- Desassociar Paragem\n0- Voltar\n");
+    printf("1- ADICIONAR\n2- ELIMINAR\n3- Mostrar\n4- Associar Paragem\n5- Desassociar Paragem\n6- Mudar Sequencia\n0- Voltar\n");
 }
 
 int ListaVazia(pLinha l) {
@@ -251,36 +262,64 @@ pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens) {
     return l;
 }
 
-pLinha MudarSequenciaParagens(pLinha l) {
+pLinha MudarSequenciaParagens(pLinha l, Paragem* vetor) {
     pLinha curr = l;
-    char aux[curr->numParagens][5],linhaNome[50];
-
+    char linhaNome[50];
+    int contador1=0, contador2=0,posID=0,aux[curr->numParagens];
+    int sizeP=50;
+    int jaexiste=-1,Lencontrada=-1, temP=-1;
 
     printf("\n Introduza o nome da linha para mudar sequencia das paragem:");
     scanf("%s", linhaNome);
     while (curr != NULL){
         if (strcmp(curr->nome, linhaNome) == 0) {
-            for (int i = 0; i < curr->numParagens; ++i) {
-                for (int j = 0; j < 5; ++j) {
-                    aux[i][j] = curr->parag[i]->id[j];
+            Lencontrada=0;
+            if(curr->numParagens == 0){
+                temP=0;
+            }
+            while(contador1 < curr->numParagens){
+                for (int i = 0; i < sizeP; ++i) {
+                    if(strcmp(curr->parag[contador1]->id,vetor[i].id)==0){
+                        aux[contador1]=i;
+                        contador1++;
+                    }
                 }
             }
             for (int i = 0; i < curr->numParagens; ++i) {
-                for (int j = 0; j < 5; ++j) {
-                    printf("%c", aux[i][j]);
+                printf("\n%d - ID: %s",(i+1),vetor[aux[i]].id);
+
+            }
+            while(contador2 < curr->numParagens){
+                printf("\n Checked!");
+                do{
+                    printf("\n Introduza a %d posicao: ",contador2+1);
+                    scanf("%d",&posID);
+                    posID-=1;
+                }while(posID > curr->numParagens);
+
+
+                for (int i = contador2; i >= 0 ; --i) {
+                    if(strcmp(curr->parag[contador2]->id,vetor[aux[posID]].id)==0){
+                        jaexiste=1;
+                    }
                 }
-                putchar('\n');
+                if(jaexiste == -1){
+                    curr->parag[contador2]=&vetor[aux[posID]];
+                    contador2++;
+                }else{
+                    printf("\nA paragem que tentou intreoduzir ja se encontra na nova sequencia! ");
+                    jaexiste=-1;
+                }
             }
-
-            for (int i = 0; i < curr->numParagens; ++i) {
-                printf(" => %d-%s",i, curr->parag[i]->nome);
-            }
-
-
         }
         curr = curr->prox;
     }
-
+    if (Lencontrada == -1){
+        printf("A linha introduzida nao existe!");
+    }
+    if(temP==0){
+        printf("\nA linha introduzida nao tem paragens associadas!");
+    }
     return  l;
 }
 

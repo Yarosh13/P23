@@ -49,7 +49,7 @@ void MostraLinhas(pLinha l);
 
 pLinha AssociaParagem(pLinha l,Paragem* vetorParagens);
 pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens);
-pLinha MudarSequenciaParagens(pLinha l);
+pLinha MudarSequenciaParagens(pLinha l, Paragem* vetor);
 
 void MostraLinhasParagens(pLinha l);
 
