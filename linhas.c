@@ -17,6 +17,7 @@ pLinha MenuLinha(pLinha linhaComboio,Paragem* vetorParagens){
 
         MenuLinhas();
         printf("\n-=}");
+        fflush(stdin);
         scanf(" %d",&escolha);
 
         switch (escolha) {
@@ -307,7 +308,7 @@ pLinha MudarSequenciaParagens(pLinha l, Paragem* vetor) {
                     curr->parag[contador2]=&vetor[aux[posID]];
                     contador2++;
                 }else{
-                    printf("\nA paragem que tentou intreoduzir ja se encontra na nova sequencia! ");
+                    printf("\nA paragem que tentou introduzir ja se encontra na nova sequencia! ");
                     jaexiste=-1;
                 }
             }
