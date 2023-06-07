@@ -11,15 +11,17 @@
 
 int main(){
     Intro();
+    int sizeP=0;
 
     //Criar lista e ED
     pLinha linhaComboio = NULL; //Criar lista ligada (arranjar um ponteiro para a lista)
-    Paragem * vetorParagens;
-    vetorParagens = malloc(sizeof(Paragem) * MAX_PARAGENS);
+    Paragem *vetorParagens = NULL;
+    //vetorParagens = malloc(sizeof(Paragem) * *sizeP);
 
-    InicializarParagem(vetorParagens, MAX_PARAGENS);
+    //InicializarParagem(vetorParagons, MAX_PARAGENS);
 
     ListaVazia(linhaComboio);
+
 
     int escolha=999;
 
@@ -28,6 +30,8 @@ int main(){
         MenuPrincipal();
 
         printf("\n-=}  ");
+        fflush(stdin);
+
         scanf(" %d",&escolha);
 
         switch (escolha) {
@@ -38,7 +42,7 @@ int main(){
 
             case 1:
                 //imprimirParagens(LinhaComboio);
-                MenuParagem(vetorParagens,MAX_PARAGENS);
+                MenuParagem(vetorParagens,&sizeP);
                 break;
 
             case 2:
@@ -57,8 +61,7 @@ int main(){
                 printf("Oops.. Tente de novo\n");
                 break;
         }
-
-
+        printf("\n%d",sizeP);
 
     }
 
