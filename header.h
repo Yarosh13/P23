@@ -26,15 +26,15 @@ void Autor();
 int MenuPrincipal();
 
 // Funções do ficheiro "paragens.c"
-int MenuParagem(Paragem* vetorParagens, int size);
+int MenuParagem(Paragem* vetorParagens, int *size);
 int MenuParagens();
 
-int InicializarParagem(Paragem* vetor, int size);
-int AdicionarParagem(Paragem* vetor, int size);
+int InicializarParagem(Paragem* vetor, int *size);
+int AdicionarParagem(Paragem* vetor, int *size);
 
 int GeraID(Paragem* vetor,int pos, int size);
 int MostrarParagens(Paragem* vetor, int size);
-int EliminaParagem(Paragem* vetor, int size);
+int EliminaParagem(Paragem* vetor, int *size);
 
 
 // Funções do ficheiro "linhas.c"
