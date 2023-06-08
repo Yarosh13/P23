@@ -8,10 +8,8 @@
 #include <unistd.h>
 #include "header.h"
 
-
-pLinha MenuLinha(pLinha linhaComboio,Paragem* vetorParagens){
+void MenuLinha(pLinha* linhaComboio, Paragem** vetorParagens, int *size){
     int escolha=999;
-    char qual_linha[4];
 
     while(1){
 
@@ -25,11 +23,11 @@ pLinha MenuLinha(pLinha linhaComboio,Paragem* vetorParagens){
                 printf("\nA voltar para o Menu Principal...\n");
                 sleep(2);
 
-                return linhaComboio;
+                //return linhaComboio;
                 break;
 
             case 1:
-                linhaComboio=InsereFinal(linhaComboio);
+                InsereFinal(linhaComboio);
                 //InsereInicio(l);
                 break;
 
@@ -38,33 +36,31 @@ pLinha MenuLinha(pLinha linhaComboio,Paragem* vetorParagens){
 
                 break;
             case 3:
-                if(ListaVazia(linhaComboio) ==1){
+                if(ListaVazia(*linhaComboio) ==1){
                     printf("Lista vazia!");
                 }else{
-                    MostraLinhasParagens(linhaComboio);
+                    MostraLinhasParagens(*linhaComboio);
                 }
-                    //mostra_linhas(linhaComboio);
-                    //MostrarParagens(vetorParagens,50);
                 break;
             case 4:
-                if(ListaVazia(linhaComboio) ==1){
+                if(ListaVazia(*linhaComboio) ==1){
                     printf("Lista vazia!");
                 }else{
-                    linhaComboio = AssociaParagem(linhaComboio,vetorParagens);
+                    AssociaParagem(*linhaComboio,*vetorParagens,*size);
                 }
                 break;
             case 5:
-                if(ListaVazia(linhaComboio) ==1){
+                if(ListaVazia(*linhaComboio) ==1){
                     printf("Lista vazia!");
                 }else{
-                    linhaComboio = DesAssociarParagem(linhaComboio,vetorParagens);
+                    DesAssociarParagem(*linhaComboio,*vetorParagens, *size);
                 }
                 break;
             case 6:
-                if(ListaVazia(linhaComboio) ==1){
+                if(ListaVazia(*linhaComboio) ==1){
                     printf("Lista vazia!");
                 }else{
-                    linhaComboio = MudarSequenciaParagens(linhaComboio,vetorParagens);
+                    MudarSequenciaParagens(*linhaComboio,*vetorParagens);
                 }
                 break;
             case 9:
@@ -93,24 +89,24 @@ int ListaVazia(pLinha l) {
         return 0;
 }
 
-pLinha InsereFinal(pLinha l){
+pLinha InsereFinal(pLinha* l){
     pLinha novo,aux;
     novo = malloc(sizeof (Linha));
-    if(novo == NULL){ printf("\nErro ao alocar memoria!"); return l;}
+    if(novo == NULL){ printf("\nErro ao alocar memoria!"); return *l;}
 
     // funcao que preenche lista.
     PreencheLinha(novo);
 
     if(l == NULL){
-        l = novo;
+        *l = novo;
     }else{
-        aux = l;
+        aux = *l;
         while(aux->prox != NULL){
             aux=aux->prox;
         }
         aux->prox=novo;
     }
-    return l;
+    return *l;
 }
 
 pLinha InsereInicio(pLinha l){
@@ -146,10 +142,10 @@ void MostraLinhas(pLinha l){
     }
 }
 
-pLinha AssociaParagem(pLinha l, Paragem* vetorParagens) {
+pLinha AssociaParagem(pLinha l, Paragem* vetorParagens,int  sizeParagem) {
+    printf("\n%d",sizeParagem);
     pLinha curr = l;
     char linhaNome[50], paragID[5];
-    int sizeParagem = 50;
     int numParag = -1,numLin = -1;
     char sn;
 
@@ -164,7 +160,8 @@ pLinha AssociaParagem(pLinha l, Paragem* vetorParagens) {
                 if (sn == 'y'){
                     printf("\nParagens nao associadas");
                     for (int i = 0; i < sizeParagem; ++i) {
-                        if(vetorParagens[i].associada != 1 && strcmp(vetorParagens[i].id, "NULL")!=0){
+                        printf("\n - ID: %s", vetorParagens[i].id);
+                        if(vetorParagens[i].associada != 1){
                             printf("\n - ID: %s", vetorParagens[i].id);
                             printf("\t - Nome: %s", vetorParagens[i].nome);
                         }
@@ -205,10 +202,9 @@ pLinha AssociaParagem(pLinha l, Paragem* vetorParagens) {
     return l;
 }
 
-pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens) {
+pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens,int  sizeParagem) {
     pLinha curr = l;
     char linhaNome[50], paragID[5];
-    int sizeParagem = 50;
     int numParag = 9999,numLin = -1,posicao;
 
     printf("\n Introduza o nome da linha para desassociar a paragem:  ");
@@ -335,7 +331,7 @@ void MostraLinhasParagens(pLinha l) {
         for (int i = 0; i < curr->numParagens; ++i) {
             printf("\n - ID: %s", curr->parag[i]->id);
             printf("\t - Nome: %s\n", curr->parag[i]->nome);
-           // printf(" - Associada: %d\n", curr->parag[i]->associada);
+            // printf(" - Associada: %d\n", curr->parag[i]->associada);
         }
         curr = curr->prox;
     }

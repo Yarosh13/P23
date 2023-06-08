@@ -42,11 +42,11 @@ int main(){
 
             case 1:
                 //imprimirParagens(LinhaComboio);
-                MenuParagem(vetorParagens,&sizeP);
+                vetorParagens=MenuParagem(vetorParagens,&sizeP);
                 break;
 
             case 2:
-                linhaComboio = MenuLinha(linhaComboio, vetorParagens);
+                MenuLinha(&linhaComboio, &vetorParagens, &sizeP);
                 break;
 
             case 3:
@@ -61,7 +61,8 @@ int main(){
                 printf("Oops.. Tente de novo\n");
                 break;
         }
-        printf("\n%d",sizeP);
+//        printf("\n%d",sizeP);
+//        MostrarParagens(vetorParagens,sizeP);
 
     }
 

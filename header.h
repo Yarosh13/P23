@@ -26,7 +26,7 @@ void Autor();
 int MenuPrincipal();
 
 // Funções do ficheiro "paragens.c"
-int MenuParagem(Paragem* vetorParagens, int *size);
+Paragem* MenuParagem(Paragem* vetorParagens, int *size);
 int MenuParagens();
 
 int InicializarParagem(Paragem* vetor, int *size);
@@ -38,21 +38,19 @@ int EliminaParagem(Paragem* vetor, int *size);
 
 
 // Funções do ficheiro "linhas.c"
-pLinha MenuLinha(pLinha linhaComboio, Paragem* vetorParagens);
+void MenuLinha(pLinha* linhaComboio, Paragem** vetorParagens, int *size);
 int MenuLinhas();
 
 int ListaVazia(pLinha p);
 void PreencheLinha(pLinha l);
-pLinha InsereFinal(pLinha l);
+pLinha InsereFinal(pLinha *l);
 pLinha InsereInicio(pLinha l);
 void MostraLinhas(pLinha l);
 
-pLinha AssociaParagem(pLinha l,Paragem* vetorParagens);
-pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens);
+pLinha AssociaParagem(pLinha l,Paragem* vetorParagens, int sizeParagem);
+pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens,int  sizeParagem);
 pLinha MudarSequenciaParagens(pLinha l, Paragem* vetor);
 
 void MostraLinhasParagens(pLinha l);
-
-
 
 #endif //UNTITLED3_HEADER_H
