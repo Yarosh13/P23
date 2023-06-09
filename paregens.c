@@ -92,8 +92,13 @@ int AdicionarParagem(Paragem* vetor, int *size){
 
 int MostrarParagens(Paragem* vetor, int size){
     for (int i = 0; i < size; ++i) {
-        printf("\nID paragem: %s",vetor[i].id);
+        printf("\n\nID paragem: %s",vetor[i].id);
         printf("\nNome paragem: %s",vetor[i].nome);
+        if(vetor[i].associada != 1){
+            printf("\nAssociada: NAO");
+        }else{
+            printf("\nAssociada: SIM");
+        }
     }
 }
 
@@ -168,4 +173,8 @@ int EliminaParagem(Paragem* vetor, int *size){
         printf("\nID nao existe!");
     }
 
+}
+
+void GuardaDadosParagem(Paragem* vetor, int sizeP){
+    
 }

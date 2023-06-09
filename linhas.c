@@ -22,12 +22,11 @@ void MenuLinha(pLinha* linhaComboio, Paragem** vetorParagens, int *size){
             case 0:
                 printf("\nA voltar para o Menu Principal...\n");
                 sleep(2);
-
-                //return linhaComboio;
+                return;
                 break;
 
             case 1:
-                InsereFinal(linhaComboio);
+                *linhaComboio =InsereFinal(linhaComboio);
                 //InsereInicio(l);
                 break;
 
@@ -46,21 +45,21 @@ void MenuLinha(pLinha* linhaComboio, Paragem** vetorParagens, int *size){
                 if(ListaVazia(*linhaComboio) ==1){
                     printf("Lista vazia!");
                 }else{
-                    AssociaParagem(*linhaComboio,*vetorParagens,*size);
+                    *linhaComboio = AssociaParagem(*linhaComboio,*vetorParagens,*size);
                 }
                 break;
             case 5:
                 if(ListaVazia(*linhaComboio) ==1){
                     printf("Lista vazia!");
                 }else{
-                    DesAssociarParagem(*linhaComboio,*vetorParagens, *size);
+                    *linhaComboio = DesAssociarParagem(*linhaComboio,*vetorParagens, *size);
                 }
                 break;
             case 6:
                 if(ListaVazia(*linhaComboio) ==1){
                     printf("Lista vazia!");
                 }else{
-                    MudarSequenciaParagens(*linhaComboio,*vetorParagens);
+                    *linhaComboio =MudarSequenciaParagens(linhaComboio,*vetorParagens,*size);
                 }
                 break;
             case 9:
@@ -89,15 +88,42 @@ int ListaVazia(pLinha l) {
         return 0;
 }
 
-pLinha InsereFinal(pLinha* l){
-    pLinha novo,aux;
-    novo = malloc(sizeof (Linha));
-    if(novo == NULL){ printf("\nErro ao alocar memoria!"); return *l;}
+pLinha InsereFinal(pLinha*l){
+    pLinha novo, aux, ig;
+    char nomelinha[50];
+    int igual = -1;
 
-    // funcao que preenche lista.
-    PreencheLinha(novo);
+    printf("Inroduza o nome da linha: ");
+    scanf("%s", nomelinha);
 
-    if(l == NULL){
+    ig = *l;
+    while (ig != NULL) {
+        if (strcmp(ig->nome, nomelinha) == 0) {
+            igual = 0;
+            break;
+        }
+        ig = ig->prox;
+    }
+
+    if (igual == 0) {
+        printf("Nome ja existe na lista!\n");
+        return *l;
+    }else{
+
+    novo = malloc(sizeof(Linha));
+    if (novo == NULL) {
+        printf("\nErro ao alocar memoria!");
+        return *l;
+    }
+
+        strcpy(novo->nome, nomelinha);
+        novo->parag=NULL;
+        novo->numParagens=0;
+        novo->prox = NULL;
+
+    }
+
+    if(*l == NULL){
         *l = novo;
     }else{
         aux = *l;
@@ -115,20 +141,11 @@ pLinha InsereInicio(pLinha l){
         printf("\nErro ao alocar memoria!");
         return l;
     } else{
-        PreencheLinha(novo);
+
         novo->prox=l;
         l=novo;
     }
     return l;
-}
-
-void PreencheLinha(pLinha l){
-    printf("Inroduza o nome da linha: ");
-    scanf("%s",l->nome);
-    printf("%s",l->nome);
-    l->parag=NULL;
-    l->numParagens=0;
-    l->prox=NULL;
 }
 
 void MostraLinhas(pLinha l){
@@ -259,16 +276,21 @@ pLinha DesAssociarParagem(pLinha l, Paragem* vetorParagens,int  sizeParagem) {
     return l;
 }
 
-pLinha MudarSequenciaParagens(pLinha l, Paragem* vetor) {
-    pLinha curr = l;
+pLinha MudarSequenciaParagens(pLinha *l, Paragem* vetor, int sizeP) {
+
+    pLinha curr = *l;
     char linhaNome[50];
     int contador1=0, contador2=0,posID=0,aux[curr->numParagens];
-    int sizeP=50;
     int jaexiste=-1,Lencontrada=-1, temP=-1;
 
     printf("\n Introduza o nome da linha para mudar sequencia das paragem:");
     scanf("%s", linhaNome);
+
     while (curr != NULL){
+
+        jaexiste=-1,Lencontrada=-1, temP=-1;
+        contador1=0, contador2=0,posID=0;
+
         if (strcmp(curr->nome, linhaNome) == 0) {
             Lencontrada=0;
             if(curr->numParagens == 0){
@@ -278,22 +300,19 @@ pLinha MudarSequenciaParagens(pLinha l, Paragem* vetor) {
                 for (int i = 0; i < sizeP; ++i) {
                     if(strcmp(curr->parag[contador1]->id,vetor[i].id)==0){
                         aux[contador1]=i;
-                        contador1++;
                     }
                 }
+                contador1++;
             }
             for (int i = 0; i < curr->numParagens; ++i) {
                 printf("\n%d - ID: %s",(i+1),vetor[aux[i]].id);
-
             }
             while(contador2 < curr->numParagens){
-                printf("\n Checked!");
                 do{
                     printf("\n Introduza a %d posicao: ",contador2+1);
                     scanf("%d",&posID);
-                    posID-=1;
+                    posID--;
                 }while(posID > curr->numParagens);
-
 
                 for (int i = contador2; i >= 0 ; --i) {
                     if(strcmp(curr->parag[contador2]->id,vetor[aux[posID]].id)==0){
@@ -317,7 +336,7 @@ pLinha MudarSequenciaParagens(pLinha l, Paragem* vetor) {
     if(temP==0){
         printf("\nA linha introduzida nao tem paragens associadas!");
     }
-    return  l;
+    return  *l;
 }
 
 void MostraLinhasParagens(pLinha l) {
@@ -330,7 +349,7 @@ void MostraLinhasParagens(pLinha l) {
         //printf("\nParagens associadas\n");
         for (int i = 0; i < curr->numParagens; ++i) {
             printf("\n - ID: %s", curr->parag[i]->id);
-            printf("\t - Nome: %s\n", curr->parag[i]->nome);
+            printf("\t - Nome: %s", curr->parag[i]->nome);
             // printf(" - Associada: %d\n", curr->parag[i]->associada);
         }
         curr = curr->prox;
